@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Model Config</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    textarea {
+      width: 100%;
+      flex-grow: 1;
+      min-height: 400px; 
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      resize: none;
+      font-family: 'Courier New', Courier, monospace;
+      margin-bottom: 1.5rem;
+    }
+
+    #saveConfigButton {
+      background: linear-gradient(90deg, #48bb78, #38a169);
+    }
+
+    #saveConfigButton:hover {
+      background: linear-gradient(90deg, #38a169, #2f855a);
+    }
+
+    #backButton {
+      background: linear-gradient(90deg, #f56565, #e53e3e);
+    }
+
+    #backButton:hover {
+      background: linear-gradient(90deg, #e53e3e, #c53030);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="main-content">
+      <h2>Edit Model Config</h2>
+      <textarea id="configTextarea"></textarea>
+      <div class="button-group">
+        <button id="saveConfigButton">Save</button>
+        <button id="backButton" class="back-button">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function loadConfig() {
+      const config = await window.electronAPI.loadModelConfig();
+      document.getElementById('configTextarea').value = JSON.stringify(config, null, 2);
+    }
+
+    document.getElementById('saveConfigButton').addEventListener('click', async () => {
+      const configText = document.getElementById('configTextarea').value;
+      try {
+        const updatedConfig = JSON.parse(configText);
+        await window.electronAPI.saveModelConfig(updatedConfig);
+        alert('Config saved successfully!');
+        window.location.href = 'index.html'; 
+      } catch (error) {
+        alert('Error saving config: ' + error.message);
+      }
+    });
+
+    document.getElementById('backButton').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    loadConfig();
+  </script>
+</body>
+</html>

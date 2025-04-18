@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit File Config</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    textarea {
+      width: 100%;
+      flex-grow: 1;
+      min-height: 400px; 
+      padding: 0.5rem;
+      font-size: 0.9rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      resize: none;
+      font-family: 'Courier New', Courier, monospace;
+      margin-bottom: 1.5rem;
+    }
+
+    #saveFileConfigButton {
+      background: linear-gradient(90deg, #48bb78, #38a169);
+    }
+
+    #saveFileConfigButton:hover {
+      background: linear-gradient(90deg, #38a169, #2f855a);
+    }
+
+    #backButton {
+      background: linear-gradient(90deg, #f56565, #e53e3e);
+    }
+
+    #backButton:hover {
+      background: linear-gradient(90deg, #e53e3e, #c53030);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="main-content">
+      <h2>Edit File Config</h2>
+      <textarea id="fileConfigTextarea"></textarea>
+      <div class="button-group">
+        <button id="saveFileConfigButton">Save</button>
+        <button id="backButton" class="back-button">Back</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function loadFileConfig() {
+      try {
+        const config = await window.electronAPI.loadFileConfig();
+        document.getElementById('fileConfigTextarea').value = config;
+      } catch (error) {
+        console.error('Error loading file config:', error);
+        alert('Failed to load file config: ' + error.message);
+      }
+    }
+
+    document.getElementById('saveFileConfigButton').addEventListener('click', async () => {
+      const configText = document.getElementById('fileConfigTextarea').value;
+      try {
+        await window.electronAPI.saveFileConfig(configText);
+        alert('File config saved successfully!');
+        window.location.href = 'index.html'; 
+      } catch (error) {
+        console.error('Error saving file config:', error);
+        alert('Error saving file config: ' + error.message);
+      }
+    });
+
+    document.getElementById('backButton').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    loadFileConfig();
+  </script>
+</body>
+</html>

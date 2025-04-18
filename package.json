@@ -1,0 +1,67 @@
+{
+  "name": "tariff-cma-comparer",
+  "version": "1.0.0",
+  "description": "A tool to compare tariffs using CMA data",
+  "main": "main.js",
+  "author": "Your Name",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --x64"
+  },
+  "keywords": [],
+  "dependencies": {
+    "electron-dl": "^3.5.0",
+    "playwright": "^1.44.1",
+    "playwright-core": "^1.51.1"
+  },
+  "devDependencies": {
+    "electron": "^35.0.3",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.example.tariffcmacomparer",
+    "productName": "Tariff CMA Comparer",
+    "files": [
+      "index.html",
+      "config.html",
+      "file-config.html",
+      "main.js",
+      "preload.js",
+      "renderer.js",
+      "sendRequest.js",
+      "compared.js",
+      "public/pdf.min.js",
+      "public/pdf.worker.min.js",
+      "model-config.json",
+      "file-config.txt",
+      "results.html",
+      "results.js",
+      "styles.css"
+    ],
+    "extraResources": [
+      "model-config.json",
+      "file-config.txt",
+      {
+        "from": "browsers/",
+        "to": "browsers/"
+      }
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icons/icon.ico",
+      "sign": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "compression": "store"
+  }
+}

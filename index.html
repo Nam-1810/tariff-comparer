@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tariff CMA Comparer</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    #downloadButton {
+      background: linear-gradient(90deg, #48bb78, #38a169);
+    }
+
+    #downloadButton:hover {
+      background: linear-gradient(90deg, #38a169, #2f855a);
+    }
+
+    #compareButton {
+      background: linear-gradient(90deg, #ed8936, #dd6b20);
+    }
+
+    #compareButton:hover {
+      background: linear-gradient(90deg, #dd6b20, #c05621);
+    }
+
+    #resultsButton {
+      background: linear-gradient(90deg, #9f7aea, #805ad5);
+    }
+
+    #resultsButton:hover {
+      background: linear-gradient(90deg, #805ad5, #6b46c1);
+    }
+
+    .config-buttons {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .config-buttons button {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 0;
+    }
+
+    .config-buttons button::after {
+      font-size: 1rem;
+      color: white;
+    }
+
+    #editConfigButton::after {
+      content: '⚙️';
+    }
+
+    #editFileConfigButton::after {
+      content: '📝';
+    }
+
+    #editConfigButton {
+      background: linear-gradient(90deg, #9f7aea, #805ad5);
+    }
+
+    #editFileConfigButton {
+      background: linear-gradient(90deg, #f6ad55, #ed8936);
+    }
+
+    .status-container {
+      white-space: pre-line;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f7fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      max-height: 190px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      color: #4a5568;
+      text-align: left;
+      line-height: 1.5;
+      position: relative;
+    }
+
+    .status-container::before {
+      content: 'Status Log';
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #718096;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 0.25rem;
+    }
+
+    .status-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .status-container::-webkit-scrollbar-track {
+      background: #edf2f7;
+      border-radius: 10px;
+    }
+
+    .status-container::-webkit-scrollbar-thumb {
+      background: #a0aec0;
+      border-radius: 10px;
+    }
+
+    .status-container::-webkit-scrollbar-thumb:hover {
+      background: #718096;
+    }
+
+    .section {
+      margin-top: 1.5rem;
+      text-align: left;
+    }
+
+    .section h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 0.75rem;
+    }
+
+    .country-list {
+      list-style: none;
+      padding: 0;
+      background: #f7fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      min-height: 50px;
+      max-height: 60 px;
+      overflow-y: auto;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+
+    .country-list::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    .country-list::-webkit-scrollbar-track {
+      background: #edf2f7;
+      border-radius: 10px;
+    }
+
+    .country-list::-webkit-scrollbar-thumb {
+      background: #a0aec0;
+      border-radius: 10px;
+    }
+
+    .country-list::-webkit-scrollbar-thumb:hover {
+      background: #718096;
+    }
+
+    .country-list li {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #4a5568;
+    }
+
+    .country-list li:last-child {
+      border-bottom: none;
+    }
+
+    #sendtoAI {
+      background: linear-gradient(90deg, #4299e1, #3182ce);
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    #sendtoAI:hover {
+      background: linear-gradient(90deg, #3182ce, #2b6cb0);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Tariff CMA Comparer</h2>
+    <div class="config-buttons">
+      <button id="editConfigButton" data-tooltip="Edit Model Config"></button>
+      <button id="editFileConfigButton" data-tooltip="Edit File Config"></button>
+    </div>
+    <div class="button-group">
+      <button id="downloadButton">Download Files</button>
+      <button id="compareButton">Check Modified Dates</button>
+      <button id="resultsButton">Results</button>
+    </div>
+    <div class="section" id="changedSection">
+      <h3>Countries with Changes Tariffs</h3>
+      <ul class="country-list" id="changedList">
+        <li>No changes detected yet. Click "Check Modified Dates" to start.</li>
+      </ul>
+    </div>
+    <div class="section" id="unchangedSection">
+      <h3>Countries with Unchanged Tariffs"</h3>
+      <ul class="country-list" id="unchangedList">
+        <li>No data yet. Click "Check Modified Dates" to start.</li>
+      </ul>
+    </div>
+    <div class="section" id="newCountries">
+      <h3>Countries Missing Tariff Files</h3>
+      <ul class="country-list" id="missingList">
+        <li>No data yet. Click "Check Modified Dates" to start.</li>
+      </ul>
+    </div>
+    <div class="status-container" id="status"></div>
+  </div>
+
+  <script src="public/pdf.min.js"></script>
+  <script src="renderer.js"></script>
+  <script src="sendRequest.js"></script>
+  <script src="compared.js"></script>
+
+  <script>
+    document.getElementById('editConfigButton').addEventListener('click', () => {
+      window.location.href = 'config.html';
+    });
+
+    document.getElementById('editFileConfigButton').addEventListener('click', () => {
+      window.location.href = 'file-config.html';
+    });
+
+    document.getElementById('resultsButton').addEventListener('click', () => {
+      window.location.href = 'results.html';
+    });
+
+    document.getElementById('downloadButton').addEventListener('click', async () => {
+      const statusElement = document.getElementById('status');
+      statusElement.textContent = 'Starting download...\n';
+
+      try {
+        const config = await window.electronAPI.getConfig(['rootPath', 'cmaUrl']);
+
+        const month = new Date().toISOString().slice(0, 7);
+        statusElement.textContent += `Month: ${month}\n`;
+
+        const cleanedLinks = await window.electronAPI.getLinks(config.cmaUrl);
+
+        if (Object.keys(cleanedLinks).length === 0) {
+          statusElement.textContent += 'No valid links found to download.\n';
+          return;
+        }
+
+        let totalFiles = 0;
+        let downloadedFiles = 0;
+
+        Object.values(cleanedLinks).forEach(urls => {
+          totalFiles += urls.length;
+        });
+        statusElement.textContent += `--------------------------------\n`;
+        statusElement.textContent += `Total files to download: ${totalFiles} \n`;
+
+        const downloadPromises = [];
+        Object.entries(cleanedLinks).forEach(([country, urls], index) => {
+          urls.forEach((fileUrl, fileIndex) => {
+            const fileName = `CMA/${month}/${country}/tariff.pdf`;
+            const filePath = `${config.rootPath}/${fileName}`;
+            const delay = (index * 2000) + (fileIndex * 500);
+
+            const downloadTask = new Promise(resolve => {
+              setTimeout(async () => {
+                try {
+                  const success = await window.electronAPI.downloadFile(fileUrl, filePath, 3, 3000);
+                  if (success) {
+                    downloadedFiles++;
+                  } else {
+                    statusElement.textContent += `Failed to download ${filePath}\n`;
+                  }
+                } catch (error) {
+                  statusElement.textContent += `Error in download task for ${filePath}: ${error.message}\n`;
+                } finally {
+                  resolve();
+                }
+              }, delay);
+            });
+
+            downloadPromises.push(downloadTask);
+          });
+        });
+
+        statusElement.textContent += 'Starting downloads...\n';
+        await Promise.all(downloadPromises);
+        statusElement.textContent += 'All downloads completed.\n';
+
+        if (downloadedFiles === totalFiles) {
+          statusElement.textContent += `🎉 All ${totalFiles} files downloaded successfully!\n`;
+        } else {
+          statusElement.textContent += `Downloaded ${downloadedFiles}/${totalFiles} files.\n`;
+        }
+      } catch (error) {
+        statusElement.textContent += `Error: ${error.message}\n`;
+      }
+    });
+  </script>
+</body>
+
+</html>

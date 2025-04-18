@@ -1,0 +1,5 @@
+dist/
+browsers/
+node_modules/
+*.exe
+*.rar
