@@ -1,5 +1,0 @@
-rootPath=C:\Users\nam.nd\Documents\VSC
-cmaUrl=https://www.cma-cgm.com/ebusiness/tariffs/demurrage-detention
-model=o3-mini-2025-01-31
-apiKey=Your_key
-

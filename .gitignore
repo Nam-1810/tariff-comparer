@@ -1,5 +1,6 @@
 dist/
 browsers/
 node_modules/
+file-config.txt
 *.exe
 *.rar
