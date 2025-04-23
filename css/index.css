@@ -1,0 +1,236 @@
+#downloadButton {
+    background: linear-gradient(90deg, #48bb78, #38a169);
+  }
+
+  #downloadButton:hover {
+    background: linear-gradient(90deg, #38a169, #2f855a);
+  }
+
+  #compareButton {
+    background: linear-gradient(90deg, #ed8936, #dd6b20);
+  }
+
+  #compareButton:hover {
+    background: linear-gradient(90deg, #dd6b20, #c05621);
+  }
+
+  #resultsButton {
+    background: linear-gradient(90deg, #9f7aea, #805ad5);
+  }
+
+  #resultsButton:hover {
+    background: linear-gradient(90deg, #805ad5, #6b46c1);
+  }
+
+  .config-buttons {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .config-buttons button {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 0;
+  }
+
+  .config-buttons button::after {
+    font-size: 1rem;
+    color: white;
+  }
+
+  #editConfigButton::after {
+    content: '⚙️';
+  }
+
+  #editFileConfigButton::after {
+    content: '📝';
+  }
+
+  #editConfigButton {
+    background: linear-gradient(90deg, #9f7aea, #805ad5);
+  }
+
+  #editFileConfigButton {
+    background: linear-gradient(90deg, #f6ad55, #ed8936);
+  }
+
+  .status-container {
+    white-space: pre-line;
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    max-height: 190px;
+    overflow-y: auto;
+    font-size: 0.9rem;
+    color: #4a5568;
+    text-align: left;
+    line-height: 1.5;
+    position: relative;
+  }
+
+  .status-container::before {
+    content: 'Status Log';
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #718096;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 0.25rem;
+  }
+
+  .status-container::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .status-container::-webkit-scrollbar-track {
+    background: #edf2f7;
+    border-radius: 10px;
+  }
+
+  .status-container::-webkit-scrollbar-thumb {
+    background: #a0aec0;
+    border-radius: 10px;
+  }
+
+  .status-container::-webkit-scrollbar-thumb:hover {
+    background: #718096;
+  }
+
+  .section {
+    margin-top: 1.5rem;
+    text-align: left;
+  }
+
+  .section h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.75rem;
+  }
+
+  .country-list {
+    list-style: none;
+    padding: 0;
+    background: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    min-height: 50px;
+    max-height: 60 px;
+    overflow-y: auto;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+
+  .country-list::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .country-list::-webkit-scrollbar-track {
+    background: #edf2f7;
+    border-radius: 10px;
+  }
+
+  .country-list::-webkit-scrollbar-thumb {
+    background: #a0aec0;
+    border-radius: 10px;
+  }
+
+  .country-list::-webkit-scrollbar-thumb:hover {
+    background: #718096;
+  }
+
+  .country-list li {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #4a5568;
+  }
+
+  .country-list li:last-child {
+    border-bottom: none;
+  }
+
+  #sendtoAI {
+    background: linear-gradient(90deg, #4299e1, #3182ce);
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  #sendtoAI:hover {
+    background: linear-gradient(90deg, #3182ce, #2b6cb0);
+  }
+
+  .button-group select {
+    width: 120px;
+    padding: 8px 30px 8px 10px; 
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+
+    background-color: #42e1d1;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    color: #333;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%23333" d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+.button-group select:hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+}
+
+.button-group select option {
+    background-color: #fff;
+    color: #333;
+    padding: 10px;
+}
+
+button:disabled {
+  background-color: #ccc;       
+  color: #666;                
+  cursor: not-allowed;         
+  opacity: 0.7;                 
+  box-shadow: none;         
+  pointer-events: none;        
+  transition: none;          
+}
+
+button:disabled:hover {
+  background-color: #ccc;
+  color: #666;
+}
+
+select:disabled {
+  background-color: #eee;
+  color: #666;
+  cursor: not-allowed;
+  opacity: 0.8;
+  pointer-events: none;
+}

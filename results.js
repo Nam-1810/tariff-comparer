@@ -14,6 +14,7 @@ async function loadMonths() {
     }
 
     const months = await window.electronAPI.readDir(resultsDir);
+    console.log(months);
     const validMonths = months.filter(month => /^\d{4}-\d{2}$/.test(month));
     validMonths.sort().reverse(); 
 

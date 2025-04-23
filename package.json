@@ -13,6 +13,7 @@
   "keywords": [],
   "dependencies": {
     "electron-dl": "^3.5.0",
+    "pdfjs-dist": "^2.16.105",
     "playwright": "^1.44.1",
     "playwright-core": "^1.51.1"
   },

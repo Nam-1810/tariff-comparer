@@ -1,17 +1,14 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
+
 contextBridge.exposeInMainWorld('electronAPI', {
   getConfig: (keys) => ipcRenderer.invoke('get-config', keys),
   loadModelConfig: () => ipcRenderer.invoke('get-model'),
   getLinks: (tariffUrl) => ipcRenderer.invoke('get-links', tariffUrl),
-  downloadFile: (fileUrl, filePath, retries, delay) => ipcRenderer.invoke('download-file', fileUrl, filePath, retries, delay),
-  readFile: (filePath) => ipcRenderer.invoke('read-file', filePath),
   readTextFile: (filePath) => ipcRenderer.invoke('read-text-file', filePath),
-  writeFile: (filePath, data) => ipcRenderer.invoke('write-file', filePath, data),
-  readDir: (dirPath) => ipcRenderer.invoke('read-dir', dirPath),
   exists: (filePath) => ipcRenderer.invoke('exists', filePath),
-  createDir: (path, options) => ipcRenderer.invoke('create-dir', path, options),
   getProjectRoot: () => ipcRenderer.invoke('get-project-root'),
+  readDir: (dirPath) => ipcRenderer.invoke('read-dir', dirPath),
   savePDFContent: (currentFilePath, previousFilePath, currentContent, previousContent) => {
     return ipcRenderer.invoke('save-pdf-content', currentFilePath, previousFilePath, currentContent, previousContent);
   },
@@ -26,5 +23,18 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
   saveFileConfig: (updatedConfig) => {
     return ipcRenderer.invoke('save-file-config', updatedConfig);
-  }
+  },
+  downloadFileFunc: async (carrier, config) => {
+    return await ipcRenderer.invoke('download-file-func', carrier, config);
+  },
+  updateStatus: (callback) => ipcRenderer.on('update-status', callback),
+  updateChangesTariffs: (callback) => ipcRenderer.on('update-changes-tariffs', callback),
+  updateUnChangesTariffs: (callback) => ipcRenderer.on('update-unchanges-tariffs', callback),
+  updateMissingTariffs: (callback) => ipcRenderer.on('update-missing-tariffs', callback),
+  compareFilesFunc: async (carrier, rootPath, currentMonth, previousMonth) => {
+    return await ipcRenderer.invoke('compare-files-func', carrier, rootPath, currentMonth, previousMonth);
+  },
+  sendToAIFunc: async (carrier, countriesData, apiKey, model) => {
+    return await ipcRenderer.invoke('send-ai-func', carrier, countriesData, apiKey, model);
+  },
 });
